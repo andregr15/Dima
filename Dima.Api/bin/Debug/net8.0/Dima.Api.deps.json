@@ -693,7 +693,10 @@
       "System.Threading.Channels/6.0.0": {},
       "Dima.Core/1.0.0": {
         "runtime": {
-          "Dima.Core.dll": {}
+          "Dima.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

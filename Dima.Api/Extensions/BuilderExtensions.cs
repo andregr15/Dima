@@ -1,4 +1,6 @@
 using Dima.Api.Data;
+using Dima.Api.Handlers;
+using Dima.Core.Handlers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Extensions;
@@ -15,5 +17,10 @@ public static  class BuilderExtensions
         builder.Services.AddDbContext<AppDbContext>(
             options => options.UseSqlite(cnnStr)
         );
+    }
+
+    public static void AddServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
     }
 }

@@ -12,12 +12,7 @@ public class PagedResponse<TData> : Response<TData>
         : base(data, code, message) { }
 
     [JsonConstructor]
-    public PagedResponse(
-        TData? data,
-        int currentPage,
-        int pageSize,
-        int totalCount
-    )
+    public PagedResponse(TData? data, int totalCount, int currentPage, int pageSize)
         : base(data)
     {
         CurrentPage = currentPage;
