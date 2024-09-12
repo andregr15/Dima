@@ -22,5 +22,6 @@ public static  class BuilderExtensions
     public static void AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
+        builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
     }
 }
