@@ -1,4 +1,5 @@
 using Dima.Api.Data;
+using Dima.Core.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -19,7 +20,8 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                 Title = request.Title,
                 PaidOrReceivedAt = request.PaidOrReceivedAt,
                 Amount = request.Amount,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId,
+                Type = request.Type
             };
 
             await context.Transactions.AddAsync(transaction);
@@ -52,6 +54,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
             transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
             transaction.Amount = request.Amount;
             transaction.CategoryId = request.CategoryId;
+            transaction.Type = request.Type;
 
             context.Transactions.Update(transaction);
             await context.SaveChangesAsync();
@@ -130,6 +133,21 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
     {
         try
         {
+            request.StartDate ??= DateTime.Now.FirstDayInMonth();
+            request.EndDate ??= DateTime.Now.LastDayInMonth();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return new PagedResponse<IEnumerable<Transaction>?>(
+                null,
+                500,
+                "[E002x0006] Não foi possível determinar a data de início ou término"
+            );
+        }
+
+        try
+        {
             var query = context
                 .Transactions.AsNoTracking()
                 .Where(x =>
@@ -137,7 +155,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                     && x.CreatedAt >= request.StartDate
                     && x.CreatedAt <= request.EndDate
                 )
-                .OrderBy(x => x.Id);
+                .OrderBy(x => x.CreatedAt);
 
             var transactions = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)

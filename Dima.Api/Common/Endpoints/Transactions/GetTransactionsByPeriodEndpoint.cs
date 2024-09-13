@@ -1,6 +1,5 @@
 using Dima.Api.Common.Api;
 using Dima.Core;
-using Dima.Core.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -25,10 +24,7 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
         int pageNumber = Configuration.DefaultPageNumber,
         int pageSize = Configuration.DefaultPageSize
     )
-    {
-        startDate ??= DateTime.Now.FirstDayInMonth();
-        endDate ??= DateTime.Now.LastDayInMonth();
-            
+    {            
         var request = new GetTransactionsByPeriodRequest
         {
             UserId = "1",
