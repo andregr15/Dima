@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core;
 using Dima.Core.Handlers;
@@ -18,6 +19,7 @@ public class GetAllCategoriesEndpoint : IEndpoint
             .Produces<PagedResponse<IEnumerable<Category>?>>();
 
     private static async Task<IResult> HandleAsync(
+        ClaimsPrincipal user,
         ICategoryHandler handler,
         int pageNumber = Configuration.DefaultPageNumber,
         int pageSize = Configuration.DefaultPageSize
@@ -25,7 +27,7 @@ public class GetAllCategoriesEndpoint : IEndpoint
     {
         var request = new GetAllCategoriesRequest
         {
-            UserId = "1",
+            UserId = user.Identity?.Name ?? string.Empty,
             PageNumber = pageNumber,
             PageSize = pageSize
         };

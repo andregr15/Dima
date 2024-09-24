@@ -1,9 +1,9 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
-
 namespace Dima.Api.Common.Endpoints.Categories;
 
 public class DeleteCategoryEndpoint : IEndpoint
@@ -16,9 +16,17 @@ public class DeleteCategoryEndpoint : IEndpoint
             .WithOrder(3)
             .Produces<Response<Category?>>();
 
-    private static async Task<IResult> HandleAsync(long id, ICategoryHandler handler)
+    private static async Task<IResult> HandleAsync(
+        ClaimsPrincipal user,
+        ICategoryHandler handler,
+        long id
+    )
     {
-        var request = new DeleteCategoryRequest { Id = id, UserId = "1" };
+        var request = new DeleteCategoryRequest
+        {
+            Id = id,
+            UserId = user.Identity?.Name ?? string.Empty
+        };
         var response = await handler.DeleteAsync(request);
         return response.IsSuccess ? TypedResults.Ok(response) : TypedResults.BadRequest(response);
     }
