@@ -1,9 +1,8 @@
-using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Api.Common.Endpoints.Categories;
+using Dima.Api.Common.Endpoints.Identity;
 using Dima.Api.Common.Endpoints.Transactions;
 using Dima.Api.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace Dima.Api.Common.Endpoints;
 
@@ -12,6 +11,8 @@ public static class Endpoint
     public static void MapEndpoints(this WebApplication app)
     {
         var endpoints = app.MapGroup("");
+
+        app.MapGet("/", () => new { message = "Ok" }).WithTags("Health Check");
 
         endpoints
             .MapGroup("v1/categories")
@@ -33,44 +34,14 @@ public static class Endpoint
             .MapEndpoint<GetTransactionByIdEndpoint>()
             .MapEndpoint<GetTransactionsByPeriodEndpoint>();
 
-        var identityEndpoints = endpoints.MapGroup("v1/indentity");
+        endpoints.MapGroup("v1/indentity").WithTags("Identity").MapIdentityApi<User>();
 
-        identityEndpoints.WithTags("Identity").MapIdentityApi<User>();
-        identityEndpoints
-            .MapPost(
-                "logout",
-                async (SignInManager<User> signInManager, UserManager<User> userManager) =>
-                {
-                    await signInManager.SignOutAsync();
-                    return Results.Ok();
-                }
-            )
-            .RequireAuthorization();
-
-        identityEndpoints
-            .MapGet(
-                "roles",
-                (ClaimsPrincipal user) =>
-                {
-                    if (user.Identity is null || !user.Identity.IsAuthenticated)
-                        return Results.Unauthorized();
-
-                    var identity = (ClaimsIdentity)user.Identity;
-                    var roles = identity
-                        .FindAll(identity.RoleClaimType)
-                        .Select(c => new
-                        {
-                            c.Issuer,
-                            c.OriginalIssuer,
-                            c.Type,
-                            c.Value,
-                            c.ValueType
-                        });
-
-                    return TypedResults.Json(roles);
-                }
-            )
-            .RequireAuthorization();
+        endpoints
+            .MapGroup("v1/indentity")
+            .WithTags("Identity")
+            .RequireAuthorization()
+            .MapEndpoint<LogoutEndpoint>()
+            .MapEndpoint<GetRolesEndpoint>();
     }
 
     private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)
