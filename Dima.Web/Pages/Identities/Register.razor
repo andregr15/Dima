@@ -1,5 +1,6 @@
 @page "/register"
 @layout HeadlessLayout
+@inherits RegisterPage
 
 <PageTitle>Dima - Entrar</PageTitle>
 
@@ -10,33 +11,38 @@
                 <img src="imgs/dima.png" alt="Dima - Controle Financeiro" width="200">
             </div>
 
-            <MudForm @ref="_mudForm">
-                <MudTextField T="string" Label="E-mail" InputType="InputType.Email" Required
-                    RequiredError="Informe o E-mail"
-                    Validation="@(new EmailAddressAttribute{ ErrorMessage = "E-mail Inválido"})" />
+            <EditForm Model="@InputModel" OnValidSubmit="@OnValidSubmitAsync">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-                <MudTextField T="string" Label="Senha" InputType="InputType.Password" Required
-                    RequiredError="Senha Inválida" />
+                <MudTextField T="string" Label="E-mail" InputType="InputType.Email" HelperText="Campo obrigatório"
+                    For="@(() => InputModel.Email)" @bind-Value="@InputModel.Email" />
 
-                <div class="d-flex mt-8">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary"
-                        StartIcon="@Icons.Material.Filled.PersonAdd" Style="width:250px">
-                        Cadastrar
-                    </MudButton>
+                <MudTextField T="string" Label="Senha" InputType="InputType.Password" HelperText="Campo obrigatório"
+                    For="@(() => InputModel.Password)" @bind-Value="@InputModel.Password" />
 
-                    <MudSpacer />
+                <div class="d-flex mt-8 justify-center">
+                    @if (IsBusy)
+                    {
+                        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+                    }
+                    else
+                    {
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+                            StartIcon="@Icons.Material.Filled.PersonAdd" Style="width:250px">
+                            Cadastrar
+                        </MudButton>
 
-                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" Href="/login" Style="width:250px"
-                        StartIcon="@Icons.Material.Filled.Login">
-                        Já tenho uma conta
-                    </MudButton>
+                        <MudSpacer />
+
+                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Href="/login" Style="width:250px"
+                            StartIcon="@Icons.Material.Filled.Login">
+                            Já tenho uma conta
+                        </MudButton>
+                    }
                 </div>
 
-            </MudForm>
+            </EditForm>
         </MudPaper>
     </MudItem>
 </MudGrid>
-
-@code {
-    MudForm? _mudForm;
-}

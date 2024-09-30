@@ -34,10 +34,10 @@ public static class Endpoint
             .MapEndpoint<GetTransactionByIdEndpoint>()
             .MapEndpoint<GetTransactionsByPeriodEndpoint>();
 
-        endpoints.MapGroup("v1/indentity").WithTags("Identity").MapIdentityApi<User>();
+        endpoints.MapGroup("v1/identity").WithTags("Identity").MapIdentityApi<User>();
 
         endpoints
-            .MapGroup("v1/indentity")
+            .MapGroup("v1/identity")
             .WithTags("Identity")
             .RequireAuthorization()
             .MapEndpoint<LogoutEndpoint>()

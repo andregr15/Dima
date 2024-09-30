@@ -68,6 +68,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
     {
         try
         {
+            //await context.Categories.Where(x => x.Id == request.Id).ExecuteDeleteAsync();
             var category = await GetCategory(request.UserId, request.Id);
 
             if (category is null)
