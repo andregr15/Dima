@@ -120,6 +120,7 @@ D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\Dima.Api.csproj.CoreCompileInputs.cache
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\Dima.Api.MvcApplicationPartsAssemblyInfo.cs
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\Dima.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\Dima.Api.sourcelink.json
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\staticwebassets.build.json
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\staticwebassets.development.json
 D:\Projetos\Visual Studio\Balta.io\Fullstack.NET\Dima\Dima.Api\obj\Debug\net8.0\staticwebassets\msbuild.Dima.Api.Microsoft.AspNetCore.StaticWebAssets.props

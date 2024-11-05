@@ -4,9 +4,9 @@ using Dima.Web.Security;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Dima.Web.Pages.Identities;
+namespace Dima.Web.Pages.Identity;
 
-public partial class RegisterPage : ComponentBase
+public partial class LoginPage : ComponentBase
 {
     #region Dependencies
 
@@ -14,7 +14,7 @@ public partial class RegisterPage : ComponentBase
     public IAccountHandler Handler { get; set; } = null!;
 
     [Inject]
-    public ISnackbar SnackBar { get; set; } = null!;
+    public ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     public NavigationManager NavigationManager { get; set; } = null!;
@@ -28,9 +28,11 @@ public partial class RegisterPage : ComponentBase
 
     public bool IsBusy { get; set; } = false;
 
-    public RegisterRequest InputModel { get; set; } = new();
+    public LoginRequest InputModel { get; set; } = new();
 
     #endregion
+
+    #region Methods
 
     #region Overrides
 
@@ -40,35 +42,31 @@ public partial class RegisterPage : ComponentBase
         var user = authState.User;
 
         if (user.Identity is { IsAuthenticated: true })
-        {
             NavigationManager.NavigateTo("/");
-        }
     }
 
     #endregion
 
-    #region Methods
-
-    public async Task OnValidSubmitAsync()
+    public async Task OnValidSubmit()
     {
         IsBusy = true;
 
         try
         {
-            Console.WriteLine(InputModel);
-            var result = await Handler.RegisterAsync(InputModel);
+            var result = await Handler.LoginAsync(InputModel);
 
             if (result.IsSuccess)
             {
-                SnackBar.Add(result.Message!, Severity.Success);
-                NavigationManager.NavigateTo("/login");
+                await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                AuthenticationStateProvider.NotifyAuthenticationStateChanged();
+                NavigationManager.NavigateTo("/");
             }
             else
-                SnackBar.Add(result.Message!, Severity.Error);
+                Snackbar.Add(result.Message!, Severity.Error);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            SnackBar.Add(e.Message, Severity.Error);
+            Snackbar.Add(ex.Message, Severity.Error);
         }
         finally
         {

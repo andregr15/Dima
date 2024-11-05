@@ -3,7 +3,7 @@ using Dima.Web.Security;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Dima.Web.Pages.Identities;
+namespace Dima.Web.Pages.Identity;
 
 public partial class LogoutPage : ComponentBase
 {

@@ -15,7 +15,7 @@ public class AccountHandler(IHttpClientFactory httpClientFactory) : IAccountHand
     {
         var response = await _client.PostAsJsonAsync("v1/identity/login?useCookies=true", request);
         return response.IsSuccessStatusCode
-            ? new Response<string>("Login realizado com sucesso", 200, null)
+            ? new Response<string>(null, 200, "Login realizado com sucesso")
             : new Response<string>(
                 null,
                 (int)response.StatusCode,
