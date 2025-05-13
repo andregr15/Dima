@@ -1,4 +1,3 @@
-using System.IO.Pipelines;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
@@ -14,6 +13,8 @@ public partial class IndexCategoriesPage : ComponentBase
     public bool IsBusy { get; set; } = false;
 
     public List<Category> Categories { get; set; } = [];
+
+    public string SearchTerm { get; set; } = string.Empty;
 
     #endregion
 
@@ -50,6 +51,20 @@ public partial class IndexCategoriesPage : ComponentBase
             IsBusy = false;
         }
     }
+
+    #endregion
+
+    #region Methods
+
+    public Func<Category, bool> Filter => category =>
+    {
+        if (string.IsNullOrEmpty(SearchTerm))
+            return true;
+
+        return category.Id.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)
+            || category.Title.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)
+            || category.Description is not null && category.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase);
+    };
 
     #endregion
 }
