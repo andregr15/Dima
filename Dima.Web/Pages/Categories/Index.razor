@@ -12,7 +12,13 @@
     </MudButton>
 </div>
 
-<MudDataGrid Items="@Categories" Striped Class="mt-4">
+<MudDataGrid Items="@Categories" Striped Class="mt-4" QuickFilter="Filter" Hideable>
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Categorias</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="SearchTerm" Placeholder="Filtrar..." Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search" Immediate IconSize="Size.Medium" Class="mt-0" />
+    </ToolBarContent>
     <Columns>
         <PropertyColumn Property="c => c.Id" Title="#" />
         <PropertyColumn Property="c => c.Title" Title="Categoria" />
