@@ -6,7 +6,7 @@
 <MudText Typo="Typo.h3">Nova Categoria</MudText>
 
 <MudPaper Class="pa-8 mt-4">
-    <EditForm Model="@InputModel" OnInvalidSubmit="OnValidSubmitAsync">
+    <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator />
 
         <MudTextField Label="Título" HelperText="Campo obrigatório" @bind-Value="@InputModel.Title"
@@ -15,8 +15,15 @@
         <MudTextField Label="Descrição" HelperText="Campo obrigatório" @bind-Value="@InputModel.Description"
             For="@(() => InputModel.Description)" AutoGrow />
 
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">
-            Salvar
-        </MudButton>
+        @if (IsBusy)
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate Size="Size.Large" />
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">
+                Salvar
+            </MudButton>
+        }
     </EditForm>
 </MudPaper>

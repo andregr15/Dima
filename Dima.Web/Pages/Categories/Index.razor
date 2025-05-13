@@ -1,0 +1,13 @@
+@page "/categories"
+@inherits IndexCategoriesPage
+
+<PageTitle>Categorias</PageTitle>
+
+<MudText Typo="Typo.h3">Categorias</MudText>
+
+<ol>
+    @foreach (var cat in Categories)
+    {
+        <li>@cat.Title</li>
+    }
+</ol>

@@ -1,6 +1,6 @@
-using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core.Models.Account;
+using System.Security.Claims;
 
 namespace Dima.Api.Common.Endpoints.Identity;
 
