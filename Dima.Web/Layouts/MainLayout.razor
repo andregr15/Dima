@@ -4,6 +4,7 @@
     <Authorized>
         <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="_isDarkMode" Theme="Configuration.Theme" />
         <MudSnackbarProvider />
+        <MudPopoverProvider />
 
         <MudLayout>
             <MudAppBar>
@@ -19,10 +20,10 @@
                     ThumbIcon="@Icons.Material.TwoTone.Lightbulb" />
             </MudAppBar>
             <MudDrawer @bind-Open="@_isDrawerOpened">
-               <NavMenu/>
+                <NavMenu />
             </MudDrawer>
             <MudMainContent>
-                <MudContainer>
+                <MudContainer Class="mt-4">
                     @Body
                 </MudContainer>
             </MudMainContent>

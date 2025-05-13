@@ -5,9 +5,17 @@
 
 <MudText Typo="Typo.h3">Categorias</MudText>
 
-<ol>
-    @foreach (var cat in Categories)
-    {
-        <li>@cat.Title</li>
-    }
-</ol>
+<div class="d-flex justify-end">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.TwoTone.Add"
+        Href="/categories/create">
+        Nova Categoria
+    </MudButton>
+</div>
+
+<MudDataGrid Items="@Categories" Striped Class="mt-4">
+    <Columns>
+        <PropertyColumn Property="c => c.Id" Title="#" />
+        <PropertyColumn Property="c => c.Title" Title="Categoria" />
+        <PropertyColumn Property="c => c.Description" Title="Descrição" />
+    </Columns>
+</MudDataGrid>

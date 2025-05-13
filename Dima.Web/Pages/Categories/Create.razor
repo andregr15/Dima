@@ -13,7 +13,7 @@
             For="@(() => InputModel.Title)" />
 
         <MudTextField Label="Descrição" HelperText="Campo obrigatório" @bind-Value="@InputModel.Description"
-            For="@(() => InputModel.Description)" AutoGrow />
+            For="@(() => InputModel.Description)" AutoGrow Class="mb-4" />
 
         @if (IsBusy)
         {
