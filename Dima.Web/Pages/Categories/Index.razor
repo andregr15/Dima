@@ -23,13 +23,13 @@
         <PropertyColumn Property="c => c.Id" Title="#" />
         <PropertyColumn Property="c => c.Title" Title="Categoria" />
         <PropertyColumn Property="c => c.Description" Title="Descrição" />
-        <TemplateColumn Class="d-flex justify-end">
+        <TemplateColumn Title="">
             <CellTemplate>
                 <MudStack Row>
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"
                         Href="@($"/categories/edit/{context.Item.Id}")" aria-label="Editar" />
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" aria-label="Excluir"
-                        OnClick="() => { }" />
+                        OnClick="() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title)" />
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>
